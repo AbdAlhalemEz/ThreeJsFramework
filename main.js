@@ -32,6 +32,7 @@ loader.load('/models/frame/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "frame"; // Set the name of the model
+  model.userData.name = "frame";
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
@@ -45,6 +46,7 @@ loader.load('/models/meat/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "meat"; // Set the name of the model
+  model.userData.name = "meat";
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
@@ -75,16 +77,18 @@ document.addEventListener('click', (event) => {
   raycaster.setFromCamera(mouse, camera);
 
   // Calculate objects intersecting the picking ray
-  const intersects = raycaster.intersectObjects(scene.children, true);
+const intersects = raycaster.intersectObjects(scene.children, true);
 
-  if (intersects.length > 0) {
-    const clickedObject = intersects[0].object;
-    const clickedModel = clickedObject.userData.model || clickedObject.parent.userData.model; // Check if the object or its parent has a reference to the model
-    if (clickedModel) {
-      selectedModel = clickedModel;
-      alert(`Model selected: ${selectedModel.userData.name}`);
-    }
+if (intersects.length > 0) {
+  const clickedObject = intersects[0].object;
+  // Check if the object or its parent has a reference to the model
+  const clickedModel = clickedObject.userData.model || clickedObject.parent.userData.model;
+  if (clickedModel) {
+    selectedModel = clickedModel;
+    alert(`Model selected: ${selectedModel.userData.name}`);
   }
+}
+
 });
 
 

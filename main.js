@@ -1,6 +1,18 @@
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+// Load Three.js library
+const threeScript = document.createElement('script');
+threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+document.head.appendChild(threeScript);
+
+// Load GLTFLoader
+const gltfLoaderScript = document.createElement('script');
+gltfLoaderScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/loaders/GLTFLoader.js';
+document.head.appendChild(gltfLoaderScript);
+
+// Load OrbitControls
+const orbitControlsScript = document.createElement('script');
+orbitControlsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/controls/OrbitControls.js';
+document.head.appendChild(orbitControlsScript);
+
 
 const moveSpeed = 0.1;
 const rotateSpeed = 0.05;

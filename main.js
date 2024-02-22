@@ -37,7 +37,32 @@ loader.load('/models/frame/scene.gltf', function (gltf) {
   const modelName = "frame"; // Set the name of the model
   model.userData.name = "frame";
   model.userData.isLocked = false; // Initially unlocked
+  model.position.set(-4.50, 3.70, -0.40);
+  model.rotation.set(1.68, 1.32, -1.69);
+  model.scale.set(0.79, 0.79, 0.79);
+  
 
+  model.traverse((child) => {
+    if (child.isMesh) {
+      child.userData.name = modelName; // Assign the name to the mesh
+      child.userData.model = model; // Assign a reference to the model to each mesh
+    }
+  });
+  models.push(model);
+  scene.add(model);
+});
+
+
+loader.load('/models/room/scene.gltf', function (gltf) {
+  // Add loaded model to the scene
+  const model = gltf.scene;
+  const modelName = "room"; // Set the name of the model
+  model.userData.name = "room";
+  model.userData.isLocked = false; // Initially unlocked
+
+ model.position.set(0.00, 2.40, 0.00);
+  model.rotation.set(0.00, 0.00, 0.00);
+  model.scale.set(2.85, 2.85, 2.85);
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
@@ -54,7 +79,9 @@ loader.load('/models/meat/scene.gltf', function (gltf) {
   const modelName = "meat"; // Set the name of the model
   model.userData.name = "meat";
   model.userData.isLocked = false; // Initially unlocked
-
+  model.position.set(1.90, 2.40, 0.00)
+  model.rotation.set(0.00, -0.65, 0.00)
+  model.scale.set(0.18, 0.18, 0.18)
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
@@ -191,9 +218,9 @@ document.addEventListener('keydown', (event) => {
       if (child.userData.model && child.userData.name && !printedModels.has(child.userData.name)) {
         const model = child.userData.model;
         console.log(`Model: ${child.userData.name}`);
-        console.log(`model.position.set(${model.position.x.toFixed(2)}, ${model.position.y.toFixed(2)}, ${model.position.z.toFixed(2)})`);
-        console.log(`model.rotation.set(${model.rotation.x.toFixed(2)}, ${model.rotation.y.toFixed(2)}, ${model.rotation.z.toFixed(2)})`);
-        console.log(`selectedModel.scale.set(${model.scale.x.toFixed(2)}, ${model.scale.y.toFixed(2)}, ${model.scale.z.toFixed(2)})`);
+        console.log(`model.position.set(${model.position.x.toFixed(2)}, ${model.position.y.toFixed(2)}, ${model.position.z.toFixed(2)});`);
+        console.log(`model.rotation.set(${model.rotation.x.toFixed(2)}, ${model.rotation.y.toFixed(2)}, ${model.rotation.z.toFixed(2)});`);
+        console.log(`model.scale.set(${model.scale.x.toFixed(2)}, ${model.scale.y.toFixed(2)}, ${model.scale.z.toFixed(2)});`);
         console.log('----------------------');
 
         printedModels.add(child.userData.name);

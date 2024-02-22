@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-let selectedModel = null;
 const moveSpeed = 0.1;
 const rotateSpeed = 0.05;
 
@@ -19,7 +18,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Add ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 5); // soft white light
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5); // soft white light
 scene.add(ambientLight);
 
 // Add grid helper
@@ -28,11 +27,16 @@ scene.add(gridHelper);
 
 // Load GLTF models
 const loader = new GLTFLoader();
+
+// An array to keep track of models
+const models = [];
+
 loader.load('/models/frame/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "frame"; // Set the name of the model
   model.userData.name = "frame";
+  model.userData.isLocked = false; // Initially unlocked
 
   model.traverse((child) => {
     if (child.isMesh) {
@@ -40,6 +44,7 @@ loader.load('/models/frame/scene.gltf', function (gltf) {
       child.userData.model = model; // Assign a reference to the model to each mesh
     }
   });
+  models.push(model);
   scene.add(model);
 });
 
@@ -48,15 +53,19 @@ loader.load('/models/meat/scene.gltf', function (gltf) {
   const model = gltf.scene;
   const modelName = "meat"; // Set the name of the model
   model.userData.name = "meat";
+  model.userData.isLocked = false; // Initially unlocked
+
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
       child.userData.model = model; // Assign a reference to the model to each mesh
     }
   });
+  models.push(model);
   scene.add(model);
 });
 
+let selectedModel = null;
 
 // Add orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -78,24 +87,31 @@ document.addEventListener('click', (event) => {
   raycaster.setFromCamera(mouse, camera);
 
   // Calculate objects intersecting the picking ray
-const intersects = raycaster.intersectObjects(scene.children, true);
+  const intersects = raycaster.intersectObjects(scene.children, true);
 
-if (intersects.length > 0) {
-  const clickedObject = intersects[0].object;
-  // Check if the object or its parent has a reference to the model
-  const clickedModel = clickedObject.userData.model || clickedObject.parent.userData.model;
-  if (clickedModel) {
-    selectedModel = clickedModel;
-    alert(`Model selected: ${selectedModel.userData.name}`);
+  if (intersects.length > 0) {
+    const clickedObject = intersects[0].object;
+    // Check if the object or its parent has a reference to the model
+    const clickedModel = clickedObject.userData.model || clickedObject.parent.userData.model;
+    if (clickedModel) {
+      selectedModel = clickedModel;
+      const lockStatus = selectedModel.userData.isLocked ? "Locked" : "Unlocked";
+      alert(`Model selected: ${selectedModel.userData.name}\nLock Status: ${lockStatus}`);
+    }
   }
-}
 
 });
 
-
 // Event listener for keyboard inputs
 document.addEventListener('keydown', (event) => {
-  if (!selectedModel) return;
+  if (event.key === 'l') {
+    if (selectedModel) {
+      selectedModel.userData.isLocked = !selectedModel.userData.isLocked; // Toggle the lock state of the selected model
+      const lockStatus = selectedModel.userData.isLocked ? "Locked" : "Unlocked";
+      alert(`Model ${selectedModel.userData.name} is now ${lockStatus}.`);
+    }
+  }
+  if (!selectedModel || selectedModel.userData.isLocked) return;
 
   switch (event.key) {
     case '4':
@@ -117,10 +133,10 @@ document.addEventListener('keydown', (event) => {
       selectedModel.scale.z *= 0.9; // Scale down along the z-axis
       break;
     case '-':
-      selectedModel.scale.multiplyScalar(0.9); // Scale down by 10%
+      selectedModel.scale.multiplyScalar(0.9); // Uniform scale down
       break;
     case '+':
-      selectedModel.scale.multiplyScalar(1.1); // Scale up by 10%
+      selectedModel.scale.multiplyScalar(1.1); // Uniform scale up
       break;
   
     case 'ArrowUp':

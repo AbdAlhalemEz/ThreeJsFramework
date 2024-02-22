@@ -10,7 +10,7 @@ const scene = new THREE.Scene();
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.5, 1000);
-camera.position.set(0, 5, 10);
+camera.position.set(0, 1.7, 2.7);
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer();
@@ -74,6 +74,27 @@ loader.load('/models/room/scene.gltf', function (gltf) {
   model.userData.name = "room";
   model.userData.isLocked = false; // Initially unlocked
   model.position.set(0.00, 0.00, 0.00); model.rotation.set(0.00, 0.00, 0.00); model.scale.set(2.85, 2.85, 2.85);
+  model.traverse((child) => {
+    if (child.isMesh) {
+      child.userData.name = modelName; // Assign the name to the mesh
+      child.userData.model = model; // Assign a reference to the model to each mesh
+    }
+  });
+  models.push(model);
+  scene.add(model);
+});
+
+
+
+
+
+loader.load('/models/sky/scene.gltf', function (gltf) {
+  // Add loaded model to the scene
+  const model = gltf.scene;
+  const modelName = "sky"; // Set the name of the model
+  model.userData.name = "sky";
+  model.userData.isLocked = false; // Initially unlocked
+
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh

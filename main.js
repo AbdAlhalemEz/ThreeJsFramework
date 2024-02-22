@@ -3,8 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 
-
-const moveSpeed = 0.1;
+const moveSpeed = 0.11;
 const rotateSpeed = 0.05;
 
 // Create a scene

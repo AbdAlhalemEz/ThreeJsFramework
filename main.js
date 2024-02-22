@@ -33,6 +33,7 @@ loader.load('/models/frame/scene.gltf', function (gltf) {
   const model = gltf.scene;
   const modelName = "frame"; // Set the name of the model
   model.userData.name = "frame";
+
   model.traverse((child) => {
     if (child.isMesh) {
       child.userData.name = modelName; // Assign the name to the mesh
@@ -97,6 +98,31 @@ document.addEventListener('keydown', (event) => {
   if (!selectedModel) return;
 
   switch (event.key) {
+    case '4':
+      selectedModel.scale.x *= 1.1; // Scale up along the x-axis
+      break;
+    case '5':
+      selectedModel.scale.y *= 1.1; // Scale up along the y-axis
+      break;
+    case '6':
+      selectedModel.scale.z *= 1.1; // Scale up along the z-axis
+      break;
+    case '1':
+      selectedModel.scale.x *= 0.9; // Scale down along the x-axis
+      break;
+    case '2':
+      selectedModel.scale.y *= 0.9; // Scale down along the y-axis
+      break;
+    case '3':
+      selectedModel.scale.z *= 0.9; // Scale down along the z-axis
+      break;
+    case '-':
+      selectedModel.scale.multiplyScalar(0.9); // Scale down by 10%
+      break;
+    case '+':
+      selectedModel.scale.multiplyScalar(1.1); // Scale up by 10%
+      break;
+  
     case 'ArrowUp':
       selectedModel.position.y += moveSpeed;
       break;
@@ -137,18 +163,21 @@ document.addEventListener('keydown', (event) => {
 });
 
 
+
+
 // Event listener for keyboard inputs
 document.addEventListener('keydown', (event) => {
   if (event.key === 'p') {
-    console.log('Printing names, positions, and rotations of models:');
+    console.log('Copy the following position, rotations, and scale to set it to the models in your code:');
     const printedModels = new Set(); // To keep track of printed models
 
     scene.traverse((child) => {
       if (child.userData.model && child.userData.name && !printedModels.has(child.userData.name)) {
         const model = child.userData.model;
         console.log(`Model: ${child.userData.name}`);
-        console.log(`Position: (${model.position.x.toFixed(2)}, ${model.position.y.toFixed(2)}, ${model.position.z.toFixed(2)})`);
-        console.log(`Rotation: (${model.rotation.x.toFixed(2)}, ${model.rotation.y.toFixed(2)}, ${model.rotation.z.toFixed(2)})`);
+        console.log(`model.position.set(${model.position.x.toFixed(2)}, ${model.position.y.toFixed(2)}, ${model.position.z.toFixed(2)})`);
+        console.log(`model.rotation.set(${model.rotation.x.toFixed(2)}, ${model.rotation.y.toFixed(2)}, ${model.rotation.z.toFixed(2)})`);
+        console.log(`selectedModel.scale.set(${model.scale.x.toFixed(2)}, ${model.scale.y.toFixed(2)}, ${model.scale.z.toFixed(2)})`);
         console.log('----------------------');
 
         printedModels.add(child.userData.name);
@@ -156,8 +185,6 @@ document.addEventListener('keydown', (event) => {
     });
   }
 });
-
-
 
 
 

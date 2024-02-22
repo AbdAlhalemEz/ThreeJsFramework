@@ -53,24 +53,7 @@ loader.load('/models/frame/scene.gltf', function (gltf) {
 });
 
 
-loader.load('/models/switch/scene.gltf', function (gltf) {
-  // Add loaded model to the scene
-  const model = gltf.scene;
-  const modelName = "switch"; // Set the name of the model
-  model.userData.name = "switch";
-  model.userData.isLocked = false; // Initially unlocked
 
-  
-
-  model.traverse((child) => {
-    if (child.isMesh) {
-      child.userData.name = modelName; // Assign the name to the mesh
-      child.userData.model = model; // Assign a reference to the model to each mesh
-    }
-  });
-  models.push(model);
-  scene.add(model);
-});
 
 loader.load('/models/room/scene.gltf', function (gltf) {
   // Add loaded model to the scene
@@ -242,26 +225,70 @@ document.addEventListener('keydown', (event) => {
 
 
 
+let modelDataDiv = null; // Variable to store the model data div
+
 // Event listener for keyboard inputs
 document.addEventListener('keydown', (event) => {
   if (event.key === 'p') {
-    console.log('Copy the following position, rotations, and scale to set it to the models in your code:');
-    const printedModels = new Set(); // To keep track of printed models
+    // Check if the model data div already exists
+    if (modelDataDiv) {
+      // If it exists, update its content and return
+      updateModelDataDivContent();
+      return;
+    }
 
-    scene.traverse((child) => {
-      if (child.userData.model && child.userData.name && !printedModels.has(child.userData.name)) {
-        const model = child.userData.model;
-        console.log(`Model: ${child.userData.name}`);
-        console.log(`model.position.set(${model.position.x.toFixed(2)}, ${model.position.y.toFixed(2)}, ${model.position.z.toFixed(2)});`);
-        console.log(`model.rotation.set(${model.rotation.x.toFixed(2)}, ${model.rotation.y.toFixed(2)}, ${model.rotation.z.toFixed(2)});`);
-        console.log(`model.scale.set(${model.scale.x.toFixed(2)}, ${model.scale.y.toFixed(2)}, ${model.scale.z.toFixed(2)});`);
-        console.log('----------------------');
+    // Create a div to display model data
+    modelDataDiv = document.createElement('div');
+    modelDataDiv.id = 'modelData';
+    modelDataDiv.style.position = 'absolute';
+    modelDataDiv.style.top = '10px';
+    modelDataDiv.style.right = '10px';
+    modelDataDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+    modelDataDiv.style.padding = '10px';
+    modelDataDiv.style.borderRadius = '5px';
+    modelDataDiv.style.zIndex = '1000';
 
-        printedModels.add(child.userData.name);
-      }
+    // Create a button to close the div
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '5px';
+    closeButton.style.right = '5px';
+    closeButton.addEventListener('click', () => {
+      modelDataDiv.remove();
+      modelDataDiv = null; // Reset the model data div variable
     });
+    modelDataDiv.appendChild(closeButton);
+
+    // Add model data to the div
+    updateModelDataDivContent();
+
+    // Append the div to the document body
+    document.body.appendChild(modelDataDiv);
   }
 });
+
+// Function to update model data div content
+function updateModelDataDivContent() {
+  // Clear existing content
+  modelDataDiv.innerHTML = '';
+
+  // Add model data to the div
+  models.forEach((model) => {
+    const modelName = model.userData.name;
+    const modelPosition = model.position;
+    const modelRotation = model.rotation;
+    const modelScale = model.scale;
+    const modelInfo = document.createElement('div');
+    modelInfo.textContent = `${modelName}: 
+      Position(${modelPosition.x.toFixed(2)}, ${modelPosition.y.toFixed(2)}, ${modelPosition.z.toFixed(2)}),
+      Rotation(${modelRotation.x.toFixed(2)}, ${modelRotation.y.toFixed(2)}, ${modelRotation.z.toFixed(2)}),
+      Scale(${modelScale.x.toFixed(2)}, ${modelScale.y.toFixed(2)}, ${modelScale.z.toFixed(2)})`;
+    modelDataDiv.appendChild(modelInfo);
+  });
+}
+
+
 
 
 

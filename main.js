@@ -19,8 +19,15 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Add ambient light
-const ambientLight = new THREE.AmbientLight(0xffffff, 3); // soft white light
-scene.add(ambientLight);
+const DirectionalLight = new THREE.DirectionalLight(0xffffff, 1); // soft white light
+DirectionalLight.position.set(0,10,100);
+scene.add(DirectionalLight);
+
+
+// Add ambient light
+const ambient = new THREE.AmbientLight(0xffffff, 1); // soft white light
+
+scene.add(ambient);
 
 
 
@@ -89,22 +96,7 @@ loader.load('/models/room/scene.gltf', function (gltf) {
 
 
 
-loader.load('/models/sky/scene.gltf', function (gltf) {
-  // Add loaded model to the scene
-  const model = gltf.scene;
-  const modelName = "sky"; // Set the name of the model
-  model.userData.name = "sky";
-  model.userData.isLocked = false; // Initially unlocked
 
-  model.traverse((child) => {
-    if (child.isMesh) {
-      child.userData.name = modelName; // Assign the name to the mesh
-      child.userData.model = model; // Assign a reference to the model to each mesh
-    }
-  });
-  models.push(model);
-  scene.add(model);
-});
 
 loader.load('/models/meat/scene.gltf', function (gltf) {
   // Add loaded model to the scene

@@ -5,6 +5,7 @@ This project is a simple web-based viewer for 3D models using Three.js. It allow
 ## Features
 
 - Load GLTF models into the viewer.
+
 loader.load('path/to/your/model.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
@@ -70,6 +71,9 @@ You can access a live demo of the model viewer [here](link-to-demo).
 - Press 'O' to display all models to choose one to control.
 - Press 'P' to show positions, rotations, and scales of all models for copying into the code.
 
+
+##  Demo
+![Demo](https://github.com/AbdAlhalemEz/ThreeJsFramework/blob/main/demo.gif)
 ## Dependencies
 
 - [Three.js](https://threejs.org/): A lightweight 3D library for rendering WebGL scenes.

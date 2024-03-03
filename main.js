@@ -1,14 +1,11 @@
-//import * as THREE from 'three';
-//import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-//import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 // Import Three.js and required modules dynamically
 
 
 
 console.log("main.js is executing...000");
-import * as THREE from 'https://unpkg.com/three@0.134.0/build/three.module.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/controls/OrbitControls.js';
 
 console.log("main.js is executing...");
 console.log(THREE); // Check if THREE is defined

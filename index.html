@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Three.js Project</title>
     <!-- Load Three.js library from CDN -->
-    <script type="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.162.0/three.module.min.js"></script>
-    
+    <script type="module" src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.module.js"></script>
     <!-- Load GLTFLoader module from CDN -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/loaders/GLTFLoader.js"></script>
     <!-- Load OrbitControls module from CDN -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/controls/OrbitControls.js"></script>
-    <!-- Your main JavaScript file -->
-    <script type="module" src="main.js"></script>
+    <!-- Your main JavaScript file with defer attribute -->
+    <script type="module" src="main.js" defer></script>
 </head>
 <body>
     <!-- Your HTML content goes here -->

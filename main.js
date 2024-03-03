@@ -2,6 +2,9 @@
 //import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 //import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+console.log("main.js is executing...");
+console.log(THREE); // Check if THREE is defined
+
 
 const moveSpeed = 0.11;
 const rotateSpeed = 0.05;

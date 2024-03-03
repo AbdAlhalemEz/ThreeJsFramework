@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Three.js Project</title>
-
-
-    
-    <script type="module" src="main.js" defer></script>
+    <!-- Define import map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.module.js",
+                "three/GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/loaders/GLTFLoader.js",
+                "three/OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.134.0/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+    <!-- Your main JavaScript file -->
+    <script type="module" src="main.js"></script>
 </head>
 <body>
     <!-- Your HTML content goes here -->
-
 </body>
 </html>

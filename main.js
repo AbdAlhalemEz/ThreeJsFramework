@@ -65,7 +65,7 @@ loader.load('models/frame/scene.gltf', function (gltf) {
   scene.add(model);
 });
 
-loader.load('/models/screen/scene.gltf', function (gltf) {
+loader.load('models/screen/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "screen"; // Set the name of the model
@@ -83,7 +83,7 @@ loader.load('/models/screen/scene.gltf', function (gltf) {
 });
 
 
-loader.load('/models/room/scene.gltf', function (gltf) {
+loader.load('models/room/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "room"; // Set the name of the model
@@ -106,7 +106,7 @@ loader.load('/models/room/scene.gltf', function (gltf) {
 
 
 
-loader.load('/models/meat/scene.gltf', function (gltf) {
+loader.load('models/meat/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "meat"; // Set the name of the model

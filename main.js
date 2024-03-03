@@ -47,7 +47,7 @@ const models = [];
 
 
 
-loader.load('/models/frame/scene.gltf', function (gltf) {
+loader.load('models/frame/scene.gltf', function (gltf) {
   // Add loaded model to the scene
   const model = gltf.scene;
   const modelName = "frame"; // Set the name of the model
